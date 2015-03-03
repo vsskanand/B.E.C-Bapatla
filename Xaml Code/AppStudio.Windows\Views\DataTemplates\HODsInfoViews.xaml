@@ -1,0 +1,138 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:AppStudio.Controls"
+    xmlns:html2xaml="using:AppStudio.Controls.Html2Xaml"
+    xmlns:commands="using:AppStudio.Commands">
+
+    <!-- ListPhotoLeftDescription -->
+    <DataTemplate x:Key="HODsInfoList">
+        <Grid MinWidth="480">
+            <GridView ItemsSource="{Binding PreviewItems}" SelectionMode="None" IsSwipeEnabled="False" IsItemClickEnabled="True"  commands:ItemClickCommand.Command="{Binding ItemClickCommand}"
+                      ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                     ItemTemplate="{StaticResource HODsInfoItem}">
+            </GridView>
+            <ProgressBar Height="40" Foreground="White" VerticalAlignment="Top" IsIndeterminate="True" Visibility="{Binding ProgressBarVisibility}" />
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="HODsInfoListSnapped">
+        <Grid Width="230">
+            <GridView ItemsSource="{Binding PreviewItems}" SelectedItem="{Binding NavigationItem, Mode=TwoWay}"
+                     SelectionMode="Single" IsSwipeEnabled="False" ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                     ItemTemplate="{StaticResource HODsInfoItemSnapped}">
+            </GridView>
+            <ProgressBar Height="40" Foreground="White" VerticalAlignment="Top" IsIndeterminate="True" Visibility="{Binding ProgressBarVisibility}" />
+        </Grid>
+    </DataTemplate>
+
+    <!-- ListPhotoLeftDescription Item -->
+    <DataTemplate x:Key="HODsInfoItem">
+        <Grid Width="480" Height="240">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="130"/>
+                <RowDefinition Height="160"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="140"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Row="0" Grid.ColumnSpan="2" Margin="0, 0, 10, 0" Style="{StaticResource ItemHeaderWrapText}"
+                       MaxHeight="50" VerticalAlignment="Center" Text="{Binding Name, Converter={StaticResource TextPlainConverter}, ConverterParameter=140}" />
+            <Image Grid.Row="1" Grid.Column="0" Margin="0, 8" Source="{Binding Image, Converter={StaticResource ThumbnailConverter}, ConverterParameter=220}" MaxHeight="110"
+                   Stretch="UniformToFill" VerticalAlignment="Top" />
+            <TextBlock Grid.Row="1" Grid.Column="1" Margin="16, 8, 10, 10" Style="{StaticResource ItemSubheaderText}"
+                       MaxHeight="110" VerticalAlignment="Top" Text="" />
+            <TextBlock Grid.Row="2" Grid.ColumnSpan="2" Margin="0, 0, 10, 0" Style="{StaticResource ItemSmallText}"
+                       MaxHeight="60" VerticalAlignment="Top" Text="{Binding Email, Converter={StaticResource TextPlainConverter}, ConverterParameter=280}" />
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="HODsInfoItemSnapped">
+        <Grid Width="220" Height="126">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="80"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+          <TextBlock Grid.Row="0" Grid.ColumnSpan="2" Margin="0,0,4,0" Style="{StaticResource ItemHeaderWrapTextSnapped}"
+                     MaxHeight="25" VerticalAlignment="Center" Text="{Binding Name, Converter={StaticResource TextPlainConverter}, ConverterParameter=140}" />
+          <Image Grid.Row="1" Grid.Column="0" Margin="0,8" Source="{Binding Image, Converter={StaticResource ThumbnailConverter}, ConverterParameter=220}" MaxHeight="110"
+                 Stretch="UniformToFill" VerticalAlignment="Top" />
+          <TextBlock Grid.Row="1" Grid.Column="1" Margin="8,4,4,4" Style="{StaticResource ItemSubheaderTextSnapped}"
+                     MaxHeight="70" VerticalAlignment="Top" Text="" />
+          <TextBlock Grid.Row="2" Grid.ColumnSpan="2" Margin="0,0,10,0" Style="{StaticResource ItemSmallTextSnapped}"
+                     MaxHeight="30" VerticalAlignment="Top" Text="{Binding Email, Converter={StaticResource TextPlainConverter}, ConverterParameter=280}" />
+        </Grid>
+    </DataTemplate>
+
+    <!-- InstancePhotoTitleDescription -->
+    <DataTemplate x:Key="HODsInfo1DetailDetail">      
+        <Grid Margin="12,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.ColumnSpan="2" Style="{StaticResource HeaderText}" Text="{Binding Name, Converter={StaticResource TextPlainConverter}, ConverterParameter = 140}" />
+            <Button Grid.Row="1" Margin="0,24,0,12" Width="480" Height="300" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource ImageButtonStyle}" Command="{Binding Source={StaticResource ActionCommands}, Path=ShowImage}" CommandParameter="{Binding Image}">
+                <Button.Background>
+                    <ImageBrush ImageSource="{Binding Image, Converter={StaticResource ThumbnailConverter}, ConverterParameter=300}" Stretch="UniformToFill" />
+                </Button.Background>
+            </Button>
+          
+            <TextBlock Grid.ColumnSpan="2" Style="{StaticResource HeaderText}" Text="{Binding Name, Converter={StaticResource TextPlainConverter}, ConverterParameter = 140}" />
+            <Grid Grid.Row="2" Margin="0,12">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+              
+                <Button Margin="0,12" Width="30" Height="30" VerticalAlignment="Top" Style="{StaticResource MailActionButton}"
+                        Command="{Binding Source={StaticResource ActionCommands}, Path=MailTo}" CommandParameter="{Binding Email}" />
+                <TextBlock Grid.Column="1" Margin="12" VerticalAlignment="Top" Style="{StaticResource ItemHeaderText}" Text="{Binding Email, Converter={StaticResource TextPlainConverter}, ConverterParameter=140}" />              
+            </Grid>
+
+            <Grid Grid.Row="1" Grid.Column="1" Margin="0,12">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button Width="30" Height="30" VerticalAlignment="Top" Style="{StaticResource CallActionButton}"
+                        Command="{Binding Source={StaticResource ActionCommands}, Path=CallToPhone}" CommandParameter="{Binding Phone}" />
+                <ScrollViewer Grid.Column="1" Margin="12,0" VerticalScrollBarVisibility="Auto" Grid.RowSpan="3">
+                   <RichTextBlock Style="{StaticResource Html2XamlStyle}" html2xaml:Properties.Html="{Binding Phone}" />
+                </ScrollViewer>
+            </Grid>
+        </Grid>       
+  </DataTemplate>
+
+    <DataTemplate x:Key="HODsInfo1DetailDetailSnapped">
+      <Grid Width="230">
+            <StackPanel>
+              <TextBlock  Margin="0,0,0,30" Style="{StaticResource HeaderText}" Text="{Binding Name, Converter={StaticResource TextPlainConverter}, ConverterParameter = 140}" />
+              <Image Margin="0" Source="{Binding Image, Converter={StaticResource ThumbnailConverter}, ConverterParameter=250}" MaxHeight="250" VerticalAlignment="Top" Stretch="UniformToFill" />
+                <TextBlock Margin="0, 16, 16, 0" Style="{StaticResource ItemHeaderText}" Text="{Binding Email, Converter={StaticResource TextPlainConverter}, ConverterParameter=140}" />
+
+              <ScrollViewer Width="210" Height="300"  Margin="0, 30"  VerticalScrollBarVisibility="Auto">
+                <RichTextBlock Style="{StaticResource Html2XamlStyle}" html2xaml:Properties.Html="{Binding Phone}" />
+              </ScrollViewer>
+           </StackPanel>
+        </Grid>
+    </DataTemplate>
+
+</ResourceDictionary>

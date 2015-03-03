@@ -1,0 +1,65 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:AppStudio.Controls"
+    xmlns:html2xaml="using:AppStudio.Controls.Html2Xaml"
+    xmlns:commands="using:AppStudio.Commands">
+
+    <!-- ListPhotoLeftDescription -->
+    <DataTemplate x:Key="HODsInfoList">
+        <Grid>
+            <ListView ItemsSource="{Binding Items}"  SelectionMode="None" IsSwipeEnabled="False" IsItemClickEnabled="True"  commands:ItemClickCommand.Command="{Binding ItemClickCommand}" 
+                      ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                     ItemTemplate="{StaticResource HODsInfoItem}">
+            </ListView>
+            <ProgressBar Width="380" Height="40" Foreground="White" VerticalAlignment="Top" IsIndeterminate="True" Visibility="{Binding ProgressBarVisibility}" />
+        </Grid>
+    </DataTemplate>
+
+    <!-- ListPhotoLeftDescription Item -->
+    <DataTemplate x:Key="HODsInfoItem">
+        <Grid MinWidth="380">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="120"/>
+                <RowDefinition Height="60"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="140"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Image Grid.Row="0" Grid.Column="0" Margin="0, 8" Source="{Binding Image, Converter={StaticResource ThumbnailConverter}, ConverterParameter=220}" MaxHeight="110"
+                    Stretch="UniformToFill" VerticalAlignment="Top" />
+          
+          <StackPanel Grid.Row="0" Grid.Column="1">
+            <TextBlock Margin="16, 8, 20, 10" Style="{StaticResource ItemHeaderWrapText}" MaxHeight="50" VerticalAlignment="Center"
+                        Text="{Binding Name, Converter={StaticResource TextPlainConverter}, ConverterParameter=140}" />
+            <TextBlock Margin="16, 8, 20, 10" Style="{StaticResource ItemSubheaderText}" MaxHeight="110" VerticalAlignment="Top"
+                        Text="" />
+          </StackPanel>
+
+            <TextBlock Grid.Row="1" Grid.ColumnSpan="2" Margin="0, 0, 10, 0" Style="{StaticResource ItemSmallText}" MaxHeight="60" VerticalAlignment="Top"
+                        Text="{Binding Email, Converter={StaticResource TextPlainConverter}, ConverterParameter=280}" />
+        </Grid>
+    </DataTemplate>
+
+
+    <!-- InstancePhotoTitleDescription -->
+    <DataTemplate x:Key="HODsInfo1DetailDetail">
+      <ScrollViewer>
+          <StackPanel>
+              <TextBlock Margin="0,16" Text="{Binding Name, Converter={StaticResource TextPlainConverter}, ConverterParameter = 140}" Style="{StaticResource SubHeaderText}" />
+              <Button Width="400" Height="300" Visibility="{Binding ImageUrl , Converter={StaticResource VisibilityConverter}}" Style="{StaticResource ImageButtonStyle}" Command="{Binding Source={StaticResource ActionCommands}, Path=ShowImage}" CommandParameter="{Binding Image}">
+                <Button.Background>
+                  <ImageBrush ImageSource="{Binding Image, Converter={StaticResource ThumbnailConverter}, ConverterParameter=300}" Stretch="UniformToFill" />
+                </Button.Background>
+              </Button>
+                            <Button Margin="0,5,5,10" VerticalAlignment="Top" Style="{StaticResource MailActionButton}"
+                Command="{Binding Source={StaticResource ActionCommands}, Path=MailTo}" CommandParameter="{Binding Email}" Content="{Binding Email, Converter={StaticResource TextPlainConverter}, ConverterParameter=240}"/>
+                            <Button Margin="0,5,5,10" VerticalAlignment="Top" Style="{StaticResource CallActionButton}"
+                Command="{Binding Source={StaticResource ActionCommands}, Path=CallToPhone}" CommandParameter="{Binding Phone}" Content="{Binding Phone, Converter={StaticResource TextPlainConverter}}"/>
+          </StackPanel>
+      </ScrollViewer>
+    </DataTemplate>
+
+</ResourceDictionary>
